@@ -1,0 +1,21 @@
+---
+de:
+  spree:
+    paypal:
+      already_refunded: "Diese Zahlung wurde zurück erstattet und kann nicht weiter bearbeitet werden."
+      no_payment_via_admin_backend: "Sie können nicht aufgeladen PayPal-Konten über das Admin-Backend zu diesem Zeitpunkt."
+      transaction: "PayPal Transaktion"
+      payer_id: "Zahler ID"
+      transaction_id: "Transaktions ID"
+      token: "Token"
+      refund: "Rückerstattung"
+      refund_amount: "Erstattungsbetrag"
+      original_amount: "Originalbetrag: %{amount}"
+      refund_successful: "PayPal Erstattung erfolgreich"
+      refund_unsuccessful: "PayPal Erstattung nicht erfolgreich"
+      actions:
+        refund: "Erstatten"
+      flash:
+        cancel: "Sie wollen PayPal doch nicht benutzen? Kein Problem."
+        connection_failed: "Verbindung zu Paypal nicht erfolgreich."
+        generic_error: "PayPal fehlgeschlagen. %{reasons}"
