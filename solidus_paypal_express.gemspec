@@ -23,7 +23,8 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
 
   s.add_dependency 'solidus_core', ['>= 1.2.0', '< 3']
-  s.add_dependency 'paypal-sdk-merchant', '1.106.1'
+  s.add_dependency 'solidus_support'
+  s.add_dependency 'paypal-sdk-merchant'
 
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'coffee-rails'
