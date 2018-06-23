@@ -12,7 +12,7 @@ module SolidusPaypalExpress
       def add_stylesheets
         inject_into_file 'vendor/assets/stylesheets/spree/frontend/all.css', " *= require spree/frontend/solidus_paypal_express\n", before: /\*\//, verbose: true
         inject_into_file 'vendor/assets/stylesheets/spree/backend/all.css', " *= require spree/backend/solidus_paypal_express\n", before: /\*\//, verbose: true
-
+      end
 
       def add_migrations
         run 'bundle exec rake railties:install:migrations FROM=solidus_paypal_express'
