@@ -24,12 +24,15 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'solidus_core', ['>= 1.2.0', '< 3']
   s.add_dependency 'solidus_support'
-  s.add_dependency 'deface', '~> 1.0'
+  s.add_dependency 'deface'
   s.add_dependency 'paypal-sdk-merchant'
 
+  s.add_development_dependency 'byebug'
   s.add_development_dependency 'capybara'
+  s.add_development_dependency 'capybara-webkit'
   s.add_development_dependency 'capybara-screenshot'
   s.add_development_dependency 'coffee-rails'
+  s.add_development_dependency 'chromedriver-helper'
   s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'factory_bot'
   s.add_development_dependency 'ffaker'
@@ -37,10 +40,11 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'simplecov'
-  s.add_development_dependency 'pry'
-  s.add_development_dependency 'pry-rails'
   s.add_development_dependency 'poltergeist'
+  s.add_development_dependency 'pry'
+  s.add_development_dependency 'puma'
   s.add_development_dependency 'require_all'
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'sass-rails'
+  s.add_development_dependency 'webmock'
 end
