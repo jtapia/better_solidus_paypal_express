@@ -1,4 +1,5 @@
 # Solidus PayPal Express
+[![Build Status](https://travis-ci.org/jtapia/better_solidus_paypal_express.svg?branch=master)](https://travis-ci.org/jtapia/better_solidus_paypal_express)
 
 Behind-the-scenes, this extension uses [PayPal's Merchant Ruby SDK](https://github.com/paypal/merchant-sdk-ruby).
 
