@@ -1,6 +1,5 @@
 module Spree
   class PaypalController < StoreController
-
     def express
       order = current_order || raise(ActiveRecord::RecordNotFound)
       items = order.line_items.map(&method(:line_item))
@@ -33,11 +32,11 @@ module Spree
         if pp_response.success?
           redirect_to provider.express_checkout_url(pp_response, useraction: 'commit')
         else
-          flash[:error] = Spree.t('flash.generic_error', scope: 'paypal', reasons: pp_response.errors.map(&:long_message).join(" "))
+          flash[:error] = Spree.t('paypal.flash.generic_error', reasons: pp_response.errors.map(&:long_message).join(" "))
           redirect_to checkout_state_path(:payment)
         end
       rescue SocketError
-        flash[:error] = Spree.t('flash.connection_failed', scope: 'paypal')
+        flash[:error] = Spree.t('paypal.flash.connection_failed')
         redirect_to checkout_state_path(:payment)
       end
     end
@@ -64,7 +63,7 @@ module Spree
     end
 
     def cancel
-      flash[:notice] = Spree.t('flash.cancel', scope: 'paypal')
+      flash[:notice] = Spree.t('paypal.flash.cancel')
       order = current_order || raise(ActiveRecord::RecordNotFound)
       redirect_to checkout_state_path(order.state, paypal_cancel_token: params[:token])
     end
@@ -80,22 +79,21 @@ module Spree
               currencyID: item.order.currency,
               value: item.price
           },
-          ItemCategory: "Physical"
+          ItemCategory: 'Physical'
       }
     end
 
-    def express_checkout_request_details order, items
+    def express_checkout_request_details(order, items)
       { SetExpressCheckoutRequestDetails: {
           InvoiceID: order.number,
           BuyerEmail: order.email,
           ReturnURL: confirm_paypal_url(payment_method_id: params[:payment_method_id], utm_nooverride: 1),
-          CancelURL:  cancel_paypal_url,
-          SolutionType: payment_method.preferred_solution.present? ? payment_method.preferred_solution : "Mark",
-          LandingPage: payment_method.preferred_landing_page.present? ? payment_method.preferred_landing_page : "Billing",
-          cppheaderimage: payment_method.preferred_logourl.present? ? payment_method.preferred_logourl : "",
+          CancelURL: cancel_paypal_url,
+          SolutionType: payment_method.preferred_solution.present? ? payment_method.preferred_solution : 'Mark',
+          LandingPage: payment_method.preferred_landing_page.present? ? payment_method.preferred_landing_page : 'Billing',
+          cppheaderimage: payment_method.preferred_logourl.present? ? payment_method.preferred_logourl : '',
           NoShipping: 1,
-          PaymentDetails: [payment_details(items)]
-      }}
+          PaymentDetails: [payment_details(items)] }}
     end
 
     def payment_method
@@ -106,10 +104,10 @@ module Spree
       payment_method.provider
     end
 
-    def payment_details items
+    def payment_details(items)
       # This retrieves the cost of shipping after promotions are applied
       # For example, if shippng costs $10, and is free with a promotion, shipment_sum is now $10
-      shipment_sum = current_order.shipments.map(&:discounted_cost).sum
+      shipment_sum = current_order.shipments.map(&:total_before_tax).sum
 
       # This calculates the item sum based upon what is in the order total, but not for shipping
       # or tax.  This is the easiest way to determine what the items should cost, as that
@@ -145,8 +143,8 @@ module Spree
           },
           ShipToAddress: address_options,
           PaymentDetailsItem: items,
-          ShippingMethod: "Shipping Method Name Goes Here",
-          PaymentAction: "Sale"
+          ShippingMethod: 'Shipping Method Name Goes Here',
+          PaymentAction: 'Sale'
         }
       end
     end
@@ -155,14 +153,14 @@ module Spree
       return {} unless address_required?
 
       {
-          Name: current_order.bill_address.try(:full_name),
-          Street1: current_order.bill_address.address1,
-          Street2: current_order.bill_address.address2,
-          CityName: current_order.bill_address.city,
-          Phone: current_order.bill_address.phone,
-          StateOrProvince: current_order.bill_address.state_text,
-          Country: current_order.bill_address.country.iso,
-          PostalCode: current_order.bill_address.zipcode
+        Name: current_order.bill_address.try(:full_name),
+        Street1: current_order.bill_address.address1,
+        Street2: current_order.bill_address.address2,
+        CityName: current_order.bill_address.city,
+        Phone: current_order.bill_address.phone,
+        StateOrProvince: current_order.bill_address.state_text,
+        Country: current_order.bill_address.country.iso,
+        PostalCode: current_order.bill_address.zipcode
       }
     end
 
